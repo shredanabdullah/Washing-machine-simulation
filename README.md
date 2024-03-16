@@ -28,6 +28,7 @@ All the peripherals are simulated and no real time objects are interfaced .
 2.2 Dependencies
 <br />
 None
+<br />
 2.3 Constraints
 <br />
 None
