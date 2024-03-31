@@ -13,8 +13,6 @@
 
 
 
-
-
 # 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 1 3
 # 18 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -1827,24 +1825,25 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 28 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 2 3
-# 9 "main.c" 2
+# 7 "main.c" 2
 
 # 1 "./main.h" 1
-# 11 "./main.h"
+# 23 "./main.h"
  void power_on_screen(void);
-# 10 "main.c" 2
+ void washing_program_display(unsigned char key);
+# 8 "main.c" 2
 
 # 1 "./digital_keypad.h" 1
 # 31 "./digital_keypad.h"
 unsigned char read_digital_keypad(unsigned char mode);
 void init_digital_keypad(void);
-# 11 "main.c" 2
+# 9 "main.c" 2
 
 # 1 "./timers.h" 1
 # 11 "./timers.h"
 void init_timer0(void);
 void init_timer2(void);
-# 12 "main.c" 2
+# 10 "main.c" 2
 
 # 1 "./clcd.h" 1
 # 35 "./clcd.h"
@@ -1852,10 +1851,17 @@ void init_clcd(void);
 void clcd_putch(const char data, unsigned char addr);
 void clcd_print(const char *str, unsigned char addr);
 void clear_screen(void);
-# 13 "main.c" 2
+# 11 "main.c" 2
 
 
 #pragma config WDTE = OFF
+
+
+
+unsigned char operation_mode= 0x01;
+unsigned char reset_flag= 0 ;
+unsigned char program_num= 0 ;
+unsigned char* washing_prog[]={"Daily", "Heavy" , "Dedicates", "Whites", "Stainwash" , "Eco cottons", "Woolens" , "Bed sheets", "Rinse+Dry" , "Dry only","Wash only" , "Aqua store"};
 
 void init_config(void){
     init_digital_keypad();
@@ -1879,24 +1885,75 @@ void power_on_screen(void){
     _delay((unsigned long)((1000)*(20000000/4000.0)));
 
     clear_screen();
-
-
 }
+
+void washing_program_display(unsigned char key){
+
+    if(reset_flag==0x10) {
+
+        clear_screen();
+        program_num = 0;
+
+    }
+
+
+    if(key==0x37){
+        program_num++;
+        clear_screen();
+        if(program_num==12){
+             program_num = 0;
+        }
+    }
+
+    clcd_print("Washing Programs", (0x80 + 0));
+    clcd_print("*", (0xC0 + 0));
+  if(program_num<=9){
+
+    clcd_print(washing_prog[program_num],(0xC0 + 2));
+    clcd_print(washing_prog[program_num+1],(0x90 + 2));
+    clcd_print(washing_prog[program_num+2],(0xD0 + 2));
+  }
+  else if(program_num==10) {
+
+      clcd_print(washing_prog[program_num],(0xC0 + 2));
+      clcd_print(washing_prog[program_num+1],(0x90 + 2));
+      clcd_print(washing_prog[0],(0xD0 + 2));
+  }
+  else if(program_num==11) {
+
+      clcd_print(washing_prog[program_num],(0xC0 + 2));
+      clcd_print(washing_prog[0],(0x90 + 2));
+      clcd_print(washing_prog[1],(0xD0 + 2));
+  }
+}
+
 void main(void) {
     init_config();
+    unsigned char key = read_digital_keypad(1);
     do{
          clcd_print("Press key5 To", (0x80 + 1));
          clcd_print("Power ON", (0xC0 + 4));
          clcd_print("Washing Machine", (0x90 + 1));
     }while(read_digital_keypad(1)!=0x2F);
-# 60 "main.c"
+# 105 "main.c"
     clear_screen();
     power_on_screen();
 
 
 
     while(1){
-     clcd_print("Washing program", (0x90 + 1));
+
+        key = read_digital_keypad(1);
+
+        switch(operation_mode){
+            case 0x01: washing_program_display(key); break;
+
+
+
+
+        }
+        reset_flag=0x00;
+
     }
     return;
 }

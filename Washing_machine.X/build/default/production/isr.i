@@ -1822,7 +1822,8 @@ extern __bank0 __bit __timeout;
 # 1 "isr.c" 2
 
 # 1 "./main.h" 1
-# 11 "./main.h"
+# 23 "./main.h"
  void power_on_screen(void);
+ void washing_program_display(unsigned char key);
 # 2 "isr.c" 2
 

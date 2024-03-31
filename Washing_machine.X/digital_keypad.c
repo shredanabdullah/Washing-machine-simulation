@@ -9,7 +9,8 @@ void init_digital_keypad(void)
 
 unsigned char read_digital_keypad(unsigned char mode)
 {
-    static unsigned char once = 1;
+    static unsigned char once = 1, longpress  ;
+    unsigned char key,prev_key;
     
     if (mode == LEVEL_DETECTION)
     {
@@ -20,12 +21,26 @@ unsigned char read_digital_keypad(unsigned char mode)
         if (((KEYPAD_PORT & INPUT_LINES) != ALL_RELEASED) && once)
         {
             once = 0;
-            
-            return KEYPAD_PORT & INPUT_LINES;
+            longpress = 0;
+            prev_key = KEYPAD_PORT & INPUT_LINES;
         }
+        
+        //for next key press, compare current key with prev_key
+        else if (!once && (prev_key == (KEYPAD_PORT & INPUT_LINES)) && longpress<30){
+            longpress++;
+        }
+        
+        else if (longpress == 30){
+            longpress++;
+            return prev_key| 0x80;
+        }
+        
         else if ((KEYPAD_PORT & INPUT_LINES) == ALL_RELEASED)
         {
             once = 1;
+            if (longpress < 30){
+                return prev_key;
+            }
         }
     }
     

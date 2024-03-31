@@ -27,11 +27,13 @@
 [v _init_digital_keypad init_digital_keypad `(v  1 e 1 0 ]
 "10
 [v _read_digital_keypad read_digital_keypad `(uc  1 e 1 0 ]
-"17 C:\Users\Tobi\MPLABXProjects\Washing_machine.X\main.c
+"22 C:\Users\Tobi\MPLABXProjects\Washing_machine.X\main.c
 [v _init_config init_config `(v  1 e 1 0 ]
-"22
+"27
 [v _power_on_screen power_on_screen `(v  1 e 1 0 ]
-"42
+"46
+[v _washing_program_display washing_program_display `(v  1 e 1 0 ]
+"86
 [v _main main `(v  1 e 1 0 ]
 "216 C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f877a.h
 [v _PORTB PORTB `VEuc  1 e 1 @6 ]
@@ -59,10 +61,29 @@
 [v _TRISE1 TRISE1 `VEb  1 e 0 @1097 ]
 "3013
 [v _TRISE2 TRISE2 `VEb  1 e 0 @1098 ]
-"42 C:\Users\Tobi\MPLABXProjects\Washing_machine.X\main.c
+"17 C:\Users\Tobi\MPLABXProjects\Washing_machine.X\main.c
+[v _operation_mode operation_mode `uc  1 e 1 0 ]
+"18
+[v _reset_flag reset_flag `uc  1 e 1 0 ]
+"19
+[v _program_num program_num `uc  1 e 1 0 ]
+"20
+[v _washing_prog washing_prog `[12]*.24uc  1 e 12 0 ]
+"86
 [v _main main `(v  1 e 1 0 ]
 {
-"69
+"88
+[v main@key key `uc  1 a 1 11 ]
+"125
+} 0
+"46
+[v _washing_program_display washing_program_display `(v  1 e 1 0 ]
+{
+[v washing_program_display@key key `uc  1 a 1 wreg ]
+[v washing_program_display@key key `uc  1 a 1 wreg ]
+"48
+[v washing_program_display@key key `uc  1 a 1 6 ]
+"84
 } 0
 "10 C:\Users\Tobi\MPLABXProjects\Washing_machine.X\digital_keypad.c
 [v _read_digital_keypad read_digital_keypad `(uc  1 e 1 0 ]
@@ -75,14 +96,14 @@
 [v read_digital_keypad@mode mode `uc  1 a 1 1 ]
 "33
 } 0
-"22 C:\Users\Tobi\MPLABXProjects\Washing_machine.X\main.c
+"27 C:\Users\Tobi\MPLABXProjects\Washing_machine.X\main.c
 [v _power_on_screen power_on_screen `(v  1 e 1 0 ]
 {
-"32
-[v power_on_screen@i_62 i `uc  1 a 1 10 ]
-"24
+"37
+[v power_on_screen@i_78 i `uc  1 a 1 10 ]
+"29
 [v power_on_screen@i i `uc  1 a 1 9 ]
-"41
+"44
 } 0
 "65 C:\Users\Tobi\MPLABXProjects\Washing_machine.X\clcd.c
 [v _clear_screen clear_screen `(v  1 e 1 0 ]
@@ -109,10 +130,10 @@
 [v clcd_print@str str `*.24DCuc  1 a 1 5 ]
 "63
 } 0
-"17 C:\Users\Tobi\MPLABXProjects\Washing_machine.X\main.c
+"22 C:\Users\Tobi\MPLABXProjects\Washing_machine.X\main.c
 [v _init_config init_config `(v  1 e 1 0 ]
 {
-"20
+"25
 } 0
 "4 C:\Users\Tobi\MPLABXProjects\Washing_machine.X\digital_keypad.c
 [v _init_digital_keypad init_digital_keypad `(v  1 e 1 0 ]
